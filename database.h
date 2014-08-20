@@ -35,7 +35,6 @@ public:
     DataStore getBase() { return m_store; }
 
     QString connectionName() { return m_connectionName; }
-    void openDatabase(const QStringList &connectionString = QStringList());
     bool isValid() { return m_database->isValid(); }
 
 
@@ -88,6 +87,7 @@ protected:
     QString m_queryString;
 
     virtual QString formatData(const QVariant &data);
+    void openDatabase(const QStringList &connectionString = QStringList());
 
 };
 

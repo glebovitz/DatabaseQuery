@@ -41,7 +41,8 @@ public slots:
     void on_actionAllLicenses_triggered();
     void on_actionIDELicenses_triggered();
     void on_actionFreeLicenses_triggered();
-//    void on_actionUsers_triggered();
+    void on_actionAppLicenses_triggered();
+    void on_actionUsers_triggered();
 //    void on_actionCharges_triggered();
 
 //    void on_actionProjectCount_triggered();
@@ -89,22 +90,13 @@ signals:
 
 private: // Properties
     Ui::MainWindow *ui;
-    //QSqlDatabase dbase;
-    //QSqlQueryModel *model;
     DataStoreModel *m_model;
     QList<Database *> m_databases;
     ConnectionList m_connections;
 
-//    static QString productQueryString;
     QFile m_file;
     QString m_savedFileName;
-//    int m_currentIndex;
-//    RunType m_runtype;
     ActionList m_actionList;
-    DataHash m_dataHash;
-    DataList m_dataList;
-    QStringList m_dataHeaders;
-    DataTypeList m_dataTypes;
     DataStore m_connectionStrings;
 
     // Filter variables
@@ -116,10 +108,12 @@ private: // Properties
 private: // Methods
 
     const QString selectFilter(QString);
+    const QString userSelectFilter(QString);
     bool importDataFromFile();
     QString addSelectFilter(QString, QString);
     DataStore importDatabase(QString filename);
     QStringList connectionString(const QString &key) { return m_connectionStrings.dataHash()[key]; }
+    const static QString connectionFile;
 };
 
 #endif // MAINWINDOW_H

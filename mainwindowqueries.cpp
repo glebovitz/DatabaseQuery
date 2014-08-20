@@ -33,6 +33,14 @@ const QString AllwhereClause = QString()
 //        + "AND (NOT " + LICENSE_ACTIVATED + ")"
         ;
 
+const QString FPASwhereClause = QString()
+        + "WHERE "
+        + "(bundle.id <> 0) "
+        + "AND purchased_license.type LIKE 'app%'"
+//        + "AND (one_time_charge.completed IS NULL) "
+//        + "AND ( " + LICENSE_EXPIRED + ") "
+//        + "AND (NOT " + LICENSE_ACTIVATED + ")"
+        ;
 
 const QString IDEwhereClause = QString()
         + "WHERE "
@@ -41,6 +49,12 @@ const QString IDEwhereClause = QString()
 //        + "AND (one_time_charge.completed IS NULL) "
 //        + "AND ( " + LICENSE_EXPIRED + ") "
 //        + "AND (NOT " + LICENSE_ACTIVATED + ")"
+        ;
+
+const QString UserwhereClause = QString()
+//        + "WHERE "
+//        + "(bundle.id <> 0) "
+//        + "AND purchased_license.type LIKE 'ide%'"
         ;
 
 QString MainWindow::addSelectFilter(QString where, QString str) {
@@ -66,11 +80,31 @@ const QString MainWindow::selectFilter(QString where) {
     return addSelectFilter(where, condition);
 }
 
+const QString MainWindow::userSelectFilter(QString where) {
+    QString condition;
+    if (!m_username.isEmpty()) {
+        condition = QString("profile.normalized_handle = '%1'").arg(m_username);
+    } else if (!m_email.isEmpty()) {
+        condition = QString("fp_user.email LIKE '%1\%'").arg(m_email);
+    } else if (!m_uid.isEmpty()) {
+        condition += QString( "fp_user.id = '%1'").arg(m_uid);
+    }
+    return addSelectFilter(where, condition);
+}
+
 void MainWindow::on_actionIDELicenses_triggered() {
     statusMessage("Starting individual purchase");
     qDebug() << selectFilter(AllwhereClause);
     m_dbq.addQueryRequest(connectionString("BLUE") /*connectionString("BLUE")*/,
                           licenseQueryString + selectFilter(IDEwhereClause));
+    m_dbq.start();
+}
+
+void MainWindow::on_actionAppLicenses_triggered() {
+    statusMessage("Starting individual purchase");
+    qDebug() << selectFilter(AllwhereClause);
+    m_dbq.addQueryRequest(connectionString("BLUE") /*connectionString("BLUE")*/,
+                          licenseQueryString + selectFilter(FPASwhereClause));
     m_dbq.start();
 }
 
@@ -123,6 +157,14 @@ void MainWindow::on_actionFreeLicenses_triggered() {
     m_dbq.addQueryRequest(connectionString("BLUE"), freeQueryString + selectFilter(AllwhereClause));
     m_dbq.addQueryRequest(connectionString("SILVER"), userQueryString, true);
     m_dbq.setRunType(DatabaseQuery::Join);
+    m_dbq.start();
+}
+
+void MainWindow::on_actionUsers_triggered() {
+    statusMessage("Starting Users");
+    qDebug() << selectFilter(AllwhereClause);
+    m_dbq.addQueryRequest(connectionString("SILVER"),
+                          userQueryString + selectFilter(UserwhereClause));
     m_dbq.start();
 }
 
@@ -225,20 +267,5 @@ void MainWindow::on_actionFreeLicenses_triggered() {
 //    runQuery();
 //}
 
-//void MainWindow::on_actionUsers_triggered() {
-//    statusMessage("Starting Users");
-//    clearDatabases();
 
-//    Database *userDB = new Database(connectionString("SILVER"), this);
-//    userDB->setQueryString(userQueryString);
-//    addDatabase(userDB);
-
-//    // The dummy query will merge in the salesforce data only
-//    // as the dummy query itself will contain no additional data.
-//    Database *dummyDB = new Database(QString(), this);
-//    addDatabase(dummyDB);
-
-//    setRunType(Join);
-//    runQuery();
-//}
 

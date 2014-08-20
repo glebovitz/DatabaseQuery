@@ -91,11 +91,11 @@ const static QString userSelectString = QString()
         + "fp_user.email AS Email" + EOField
         + "profile.normalized_handle AS Username" + EOField
         + "profile.display AS Full_Name" + EOField
-        + "profile.company AS Company" + EOField
+        + "profile.company AS Company" + EOLine
 //        + "count(project.author) AS Projects" + EOField
 //        + "min(login.when) AS Sign_On_Date" + EOField
 //        + "min(project.created) AS First_Created" + EOField
-        + "max(project.created) AS Last_Modified" + EOLine
+//        + "max(project.created) AS Last_Modified" + EOLine
         ;
 
 const static QString salesforceSelectString = QString()

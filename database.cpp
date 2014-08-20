@@ -75,25 +75,9 @@ void Database::setConnectionString (const QStringList &list) {
 }
 
 void Database::setOptions() {
-
 }
 
 void Database::getOptions() {
-//    DatabaseDialog *dialog = new DatabaseDialog(this);
-
-//    dialog->setHostName(m_host);
-//    dialog->setDatabaseName(m_databaseName);
-//    dialog->setUserName(m_user);
-//    dialog->setPort(m_port);
-//    dialog->setConnectionName(m_connectionName);
-//    dialog->setPassword(m_password);
-
-//    connect(dialog, SIGNAL(databaseNameChanged(QString)), SLOT(setDatabaseName(QString)) );
-//    connect(dialog, SIGNAL(hostNameChanged(QString)), SLOT(setHostName(QString)) );
-//    connect(dialog, SIGNAL(userNameChanged(QString)), SLOT(setUserName(QString)) );
-//    connect(dialog, SIGNAL(passwordChanged(QString)), SLOT(setPassword(QString)) );
-//    connect(dialog, SIGNAL(portChanged(int)), SLOT(setPort(int)) );
-//    dialog->exec();
 }
 
 QString Database::formatData(const QVariant &data) {

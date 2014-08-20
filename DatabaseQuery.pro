@@ -8,7 +8,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Database_Query
+TARGET = DatabaseQuery
 TEMPLATE = app
 
 
@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     datastoremodel.cpp \
     databasequery.cpp \
     databasequeryrequest.cpp \
-    mainwindowqueries.cpp
+    mainwindowqueries.cpp \
+    datanode.cpp
 
 HEADERS  += mainwindow.h \
     databasedialog.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     datastore.h \
     datastoremodel.h \
     databasequery.h \
-    databasequeryrequest.h
+    databasequeryrequest.h \
+    datanode.h
 
 FORMS    += mainwindow.ui \
     databasedialog.ui \

@@ -80,8 +80,11 @@ void MainWindow::actionCopy_triggered() {
     }
 }
 
+const QString connectionFile = QDir::homePath() + "/.databasequery/connectionStrings.csv";
+
 void MainWindow::importConnectionStrings() {
-    m_connectionStrings = importDatabase("connectionStrings.csv");
+    QString path = QDir::homePath() + "/.databasequery/connectionStrings.csv";
+    m_connectionStrings = importDatabase(path);
 
 }
 
@@ -98,7 +101,7 @@ DataStore MainWindow::importDatabase(QString filename)
             for (int row = 0; !stream.atEnd(); row++) {
                 if (row == 0) {
                     store.setHeader(stream.readLine().remove("\"").split(QRegExp(",[ ]*")));
-                    for (int i = 0; i < m_dataHeaders.count(); i++) {
+                    for (int i = 0; i < store.dataHeaders().count(); i++) {
                         store.appendType(QVariant::String);
                     }
                 } else {
